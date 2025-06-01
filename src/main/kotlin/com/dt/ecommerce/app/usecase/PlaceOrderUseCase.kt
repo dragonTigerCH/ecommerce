@@ -16,7 +16,6 @@ class PlaceOrderUseCase(
 
     data class Param(
         val productId: Long,
-
     ): Params {
         override fun validate(): Boolean {
 
