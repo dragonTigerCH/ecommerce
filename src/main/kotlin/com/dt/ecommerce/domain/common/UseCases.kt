@@ -1,4 +1,4 @@
-package com.dt.ecommerce.domain
+package com.dt.ecommerce.domain.common
 
 interface Params {
     fun validate(): Boolean

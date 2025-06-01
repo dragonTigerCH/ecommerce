@@ -1,5 +1,6 @@
-package com.dt.ecommerce.infra
+package com.dt.ecommerce.infra.customer
 
+import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.customer.Customer
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -16,7 +17,7 @@ class CustomerEntity(
 ) {
     fun toDomain(): Customer {
         return Customer(
-            id = id,
+            pk = PK.from(id),
             email = email,
             name = name
         )
@@ -25,7 +26,7 @@ class CustomerEntity(
     companion object {
         fun fromDomain(customer: Customer): CustomerEntity {
             return CustomerEntity(
-                id = customer.id,
+                id = customer.pk.getOriginal(),
                 email = customer.email,
                 name = customer.name
             )

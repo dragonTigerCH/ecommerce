@@ -1,6 +1,6 @@
 package com.dt.ecommerce.infra.order
 
-import com.dt.ecommerce.domain.order.Money
+import com.dt.ecommerce.domain.common.Money
 import jakarta.persistence.Embeddable
 import java.math.BigDecimal
 

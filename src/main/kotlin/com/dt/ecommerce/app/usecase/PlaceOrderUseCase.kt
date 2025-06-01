@@ -1,7 +1,7 @@
 package com.dt.ecommerce.app.usecase
 
-import com.dt.ecommerce.domain.Params
-import com.dt.ecommerce.domain.UseCase
+import com.dt.ecommerce.domain.common.Params
+import com.dt.ecommerce.domain.common.UseCase
 import com.dt.ecommerce.domain.order.Order
 import com.dt.ecommerce.domain.order.OrderManagement
 import com.dt.ecommerce.domain.order.OrderProvider
@@ -16,6 +16,7 @@ class PlaceOrderUseCase(
 
     data class Param(
         val productId: Long,
+
     ): Params {
         override fun validate(): Boolean {
 
@@ -28,6 +29,7 @@ class PlaceOrderUseCase(
     )
 
     override fun execute(param: Param): Result {
+        provider.load(param.productId)
         TODO()
     }
 }

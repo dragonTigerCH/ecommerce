@@ -1,10 +1,11 @@
 package com.dt.ecommerce.domain.product
 
+import com.dt.ecommerce.domain.common.PK
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 data class Product(
-    var id: Long? = null,
+    var pk: PK = PK.NULL,
     val sku: String,
     val name: String,
     val description: String,

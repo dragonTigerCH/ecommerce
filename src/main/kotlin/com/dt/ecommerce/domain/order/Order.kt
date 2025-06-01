@@ -1,12 +1,15 @@
 package com.dt.ecommerce.domain.order
 
+import com.dt.ecommerce.domain.common.Address
+import com.dt.ecommerce.domain.common.Money
+import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.customer.Customer
-import com.dt.ecommerce.domain.order.OrderItem
+import com.dt.ecommerce.domain.order.item.OrderItem
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 data class Order(
-    val id: Long? = null,
+    var pk: PK = PK.NULL,
     val items: List<OrderItem>,
     val orderDate: LocalDateTime = LocalDateTime.now(),
     val status: OrderStatus = OrderStatus.PENDING,
@@ -42,32 +45,3 @@ data class Order(
         )
     }
 }
-
-data class Address(
-    var id: Long? = null,
-    val fullName: String,
-    val line1: String,
-    val detail: String? = null,
-    val city: String,
-    val state: String,
-    val postalCode: String,
-    val country: String,
-    val phoneNumber: String
-) {
-    companion object {
-        val NONE = Address(
-            fullName = "",
-            line1 = "",
-            city = "",
-            state = "",
-            postalCode = "",
-            country = "",
-            phoneNumber = ""
-        )
-    }
-}
-
-data class Money(
-    val amount: BigDecimal = BigDecimal.ZERO,
-    val currency: String = "KRW"
-)

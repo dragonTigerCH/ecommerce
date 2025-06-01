@@ -1,7 +1,8 @@
 package com.dt.ecommerce.domain.customer
 
+import com.dt.ecommerce.domain.common.PK
+
 interface CustomerRepository {
-    fun findBy(id: Long): Customer?
-    fun findByEmail(email: String): Customer?
+    fun findBy(pk: PK): Customer?
     fun save(customer: Customer): Customer
 }

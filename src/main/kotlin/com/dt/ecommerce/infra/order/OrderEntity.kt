@@ -1,8 +1,9 @@
 package com.dt.ecommerce.infra.order
 
+import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.order.Order
 import com.dt.ecommerce.domain.order.Order.OrderStatus
-import com.dt.ecommerce.infra.CustomerEntity
+import com.dt.ecommerce.infra.customer.CustomerEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -11,10 +12,6 @@ class OrderEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
-    val items: List<OrderItemEntity>,
 
     val orderDate: LocalDateTime = LocalDateTime.now(),
 
@@ -78,8 +75,8 @@ class OrderEntity(
 ) {
     fun toDomain(): Order {
         return Order(
-            id = id,
-            items = items.map { it.toDomain() },
+            pk = PK.from(id),
+            items = emptyList(), //TODO
             orderDate = orderDate,
             status = status,
             customer = customer.toDomain(),
@@ -97,8 +94,7 @@ class OrderEntity(
     companion object {
         fun fromDomain(order: Order): OrderEntity {
             return OrderEntity(
-                id = order.id,
-                items = order.items.map { OrderItemEntity.fromDomain(it) },
+                id = order.pk.getOriginal(),
                 orderDate = order.orderDate,
                 status = order.status,
                 customer = CustomerEntity.fromDomain(order.customer),

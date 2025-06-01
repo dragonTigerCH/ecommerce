@@ -1,11 +1,13 @@
-package com.dt.ecommerce.domain.order
+package com.dt.ecommerce.domain.order.item
 
+import com.dt.ecommerce.domain.common.PK
+import com.dt.ecommerce.domain.order.Order
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 data class OrderItem(
-    var id: Long? = null,
-    val orderId: Long,
+    var pk: PK = PK.NULL,
+    val order: Order,
     val productId: Long,
     val productSku: String,
     val productName: String,

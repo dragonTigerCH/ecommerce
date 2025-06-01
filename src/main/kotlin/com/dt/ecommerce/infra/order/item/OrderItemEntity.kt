@@ -1,7 +1,19 @@
-package com.dt.ecommerce.infra.order
+package com.dt.ecommerce.infra.order.item
 
-import com.dt.ecommerce.domain.order.OrderItem
-import jakarta.persistence.*
+import com.dt.ecommerce.domain.common.PK
+import com.dt.ecommerce.domain.order.item.OrderItem
+import com.dt.ecommerce.infra.order.OrderEntity
+import jakarta.persistence.CollectionTable
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.MapKeyColumn
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -10,7 +22,8 @@ class OrderItemEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    val orderId: Long,
+    @ManyToOne(fetch = FetchType.LAZY)
+    val order: OrderEntity,
     val productId: Long,
     val productSku: String,
     val productName: String,
@@ -29,8 +42,8 @@ class OrderItemEntity(
 ) {
     fun toDomain(): OrderItem {
         return OrderItem(
-            id = id,
-            orderId = orderId,
+            pk = PK.from(id),
+            order = order.toDomain(),
             productId = productId,
             productSku = productSku,
             productName = productName,
@@ -46,8 +59,8 @@ class OrderItemEntity(
     companion object {
         fun fromDomain(orderItem: OrderItem): OrderItemEntity {
             return OrderItemEntity(
-                id = orderItem.id,
-                orderId = orderItem.orderId,
+                id = orderItem.pk.getOriginal(),
+                order = OrderEntity.fromDomain(orderItem.order),
                 productId = orderItem.productId,
                 productSku = orderItem.productSku,
                 productName = orderItem.productName,

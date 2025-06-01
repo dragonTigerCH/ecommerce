@@ -1,10 +1,12 @@
-package com.dt.ecommerce.domain
+package com.dt.ecommerce.domain.cart
 
+import com.dt.ecommerce.domain.common.PK
+import com.dt.ecommerce.domain.customer.Customer
 import java.time.LocalDateTime
 
 data class Cart(
-    var id: Long,
-    val user: User,
+    var pk: PK = PK.NULL,
+    val customer: Customer,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
     val items: List<CartItem>
