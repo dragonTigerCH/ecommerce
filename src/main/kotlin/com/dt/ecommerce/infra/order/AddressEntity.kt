@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable
 @Embeddable
 class AddressEntity(
     val fullName: String,
-    val line1: String,
+    val street: String,
     val detail: String? = null,
     val city: String,
     val state: String,
@@ -17,7 +17,7 @@ class AddressEntity(
     fun toDomain(): Address {
         return Address(
             fullName = fullName,
-            line1 = line1,
+            street = street,
             detail = detail,
             city = city,
             state = state,
@@ -30,13 +30,14 @@ class AddressEntity(
     companion object {
         fun fromDomain(address: Address): AddressEntity {
             return AddressEntity(
-                fullName = address.fullName,
-                line1 = address.line1,
+                street = address.street,
                 detail = address.detail,
                 city = address.city,
                 state = address.state,
                 postalCode = address.postalCode,
                 country = address.country,
+
+                fullName = address.fullName,
                 phoneNumber = address.phoneNumber
             )
         }

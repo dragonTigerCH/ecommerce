@@ -1,5 +1,6 @@
 package com.dt.ecommerce.app.usecase
 
+import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.common.Params
 import com.dt.ecommerce.domain.common.UseCase
 import com.dt.ecommerce.domain.order.Order
@@ -28,7 +29,7 @@ class PlaceOrderUseCase(
     )
 
     override fun execute(param: Param): Result {
-        provider.load(param.productId)
+        val load = provider.load(PK.of(1L)) ?: throw Exception()
         TODO()
     }
 }

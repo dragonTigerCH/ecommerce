@@ -1,21 +1,30 @@
 package com.dt.ecommerce.infra.order
 
+import com.dt.ecommerce.domain.common.PK
+import com.dt.ecommerce.domain.customer.Customer
+import com.dt.ecommerce.domain.customer.CustomerRepository
 import com.dt.ecommerce.domain.order.Order
 import com.dt.ecommerce.domain.order.OrderRepository
-import org.springframework.data.jpa.repository.JpaRepository
+import com.dt.ecommerce.infra.customer.CustomerJpaRepository
+import com.dt.ecommerce.infra.order.item.OrderItemJpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
 class OrderRepositoryImpl(
-    private val jpaRepository: OrderJpaRepository
+    private val orderRepository: OrderJpaRepository,
+    private val orderItemRepository: OrderItemJpaRepository,
+    private val customerRepository: CustomerJpaRepository,
 ): OrderRepository{
 
-    override fun findBy(id: Long): Order? {
-        return jpaRepository.findById(id).map { it.toDomain() }.orElse(null)
+    override fun findBy(pk: PK): Order? {
+        val items = orderItemRepository.findAllByOrderId(pk.getKey())
+//        customerRepository.findById()
+        return orderRepository.findById(pk.getKey()).map { it.toDomain() }.orElse(null)
+            .copy(items = items.map { it.toDomain() })
     }
 
-    override fun save(order: Order): Order {
-        val entity = OrderEntity.fromDomain(order)
-        return jpaRepository.save(entity).toDomain()
+    override fun save(order: Order, customer: Customer): Order {
+        return OrderEntity.fromDomain(order, customer)
+            .run { orderRepository.save(this).toDomain() }
     }
 }
