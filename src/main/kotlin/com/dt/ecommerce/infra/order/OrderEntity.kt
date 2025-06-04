@@ -4,6 +4,7 @@ import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.customer.Customer
 import com.dt.ecommerce.domain.order.Order
 import com.dt.ecommerce.domain.order.Order.OrderStatus
+import com.dt.ecommerce.infra.BaseEntity
 import com.dt.ecommerce.infra.customer.CustomerEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -12,13 +13,13 @@ import java.time.LocalDateTime
 @Table(name = "orders")
 class OrderEntity(
 
-    customer: CustomerEntity,
+    customer: Long,
     shippingAddress: AddressEntity,
     totalAmount: MoneyEntity,
 
     status: OrderStatus = OrderStatus.PENDING,
     notes: String? = null,
-) {
+): BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +28,9 @@ class OrderEntity(
     @Enumerated(EnumType.STRING)
     var status: OrderStatus = status
 
-    @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "customer_id")
-    var customer: CustomerEntity = customer
+    var customerId: Long = customer
+        protected set
 
     @Embedded
     @AttributeOverrides(
@@ -52,35 +53,30 @@ class OrderEntity(
     var totalAmount: MoneyEntity = totalAmount
 
     var notes: String? = notes
-    var createdAt: LocalDateTime = LocalDateTime.now()
-    var updatedAt: LocalDateTime? = null
 
 
     fun toDomain(): Order {
         return Order(
             pk = PK.from(id),
-            customer = customer.toDomain(),
+            customer = PK.from(customerId),
             items = emptyList(), //TODO
             status = status,
             shippingAddress = shippingAddress.toDomain(),
             totalAmount = totalAmount.toDomain(),
             notes = notes,
-            createdAt = createdAt,
-            updatedAt = updatedAt
         )
     }
 
     companion object {
-        fun fromDomain(order: Order, customer: Customer): OrderEntity =
+        fun fromDomain(order: Order): OrderEntity =
             OrderEntity(
                 status = order.status,
-                customer = CustomerEntity.fromDomain(customer),
+                customer = order.customer.getKey(),
                 shippingAddress = AddressEntity.fromDomain(order.shippingAddress),
                 totalAmount = MoneyEntity.fromDomain(order.totalAmount),
                 notes = order.notes,
-            ).run {
-                this.id = order.pk.getOriginal();
-                this
+            ).also {
+                it.id = order.pk.getOriginal()
             }
 
     }

@@ -7,6 +7,6 @@ import com.dt.ecommerce.domain.customer.Customer
 interface OrderRepository {
     fun findBy(pk: PK): Order?
 
-    fun save(order: Order, customer: Customer): Order
+    fun save(order: Order): Order
 }
 

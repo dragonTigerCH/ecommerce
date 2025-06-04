@@ -1,4 +1,4 @@
-package com.dt.ecommerce
+package com.dt.ecommerce.infra
 
 import com.dt.ecommerce.domain.order.OrderProvider
 import com.dt.ecommerce.domain.order.OrderRepository

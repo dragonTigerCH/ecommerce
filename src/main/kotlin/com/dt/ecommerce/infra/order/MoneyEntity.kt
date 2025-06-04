@@ -4,6 +4,7 @@ import com.dt.ecommerce.domain.common.Money
 import jakarta.persistence.Embeddable
 import java.math.BigDecimal
 
+
 @Embeddable
 class MoneyEntity(
     val amount: BigDecimal = BigDecimal.ZERO,

@@ -13,18 +13,16 @@ import org.springframework.stereotype.Repository
 class OrderRepositoryImpl(
     private val orderRepository: OrderJpaRepository,
     private val orderItemRepository: OrderItemJpaRepository,
-    private val customerRepository: CustomerJpaRepository,
 ): OrderRepository{
 
     override fun findBy(pk: PK): Order? {
         val items = orderItemRepository.findAllByOrderId(pk.getKey())
-//        customerRepository.findById()
         return orderRepository.findById(pk.getKey()).map { it.toDomain() }.orElse(null)
             .copy(items = items.map { it.toDomain() })
     }
 
-    override fun save(order: Order, customer: Customer): Order {
-        return OrderEntity.fromDomain(order, customer)
+    override fun save(order: Order): Order {
+        return OrderEntity.fromDomain(order)
             .run { orderRepository.save(this).toDomain() }
     }
 }

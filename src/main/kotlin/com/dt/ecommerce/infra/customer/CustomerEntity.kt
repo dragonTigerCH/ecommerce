@@ -40,7 +40,7 @@ class CustomerEntity(
             return CustomerEntity(
                 email = customer.email,
                 name = customer.name
-            ).run { this.id = customer.pk.getOriginal(); this }
+            ).also { it.id = customer.pk.getOriginal() }
         }
     }
 }

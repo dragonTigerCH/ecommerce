@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 data class Order(
     var pk: PK = PK.NULL,
-    val customer: Customer,
+    val customer: PK,
 
     val items: List<OrderItem>,
     val status: OrderStatus = OrderStatus.PENDING,
@@ -28,7 +28,7 @@ data class Order(
     companion object {
         fun create(
             items: List<OrderItem>,
-            customer: Customer,
+            customer: PK,
             totalAmount: Money,
             shippingAddress: Address = Address.NONE,
         ) = Order(
@@ -51,6 +51,5 @@ data class OrderItem(
     val unitPrice: BigDecimal,
     val discount: BigDecimal = BigDecimal.ZERO,
     val subtotal: BigDecimal,
-    val attributes: Map<String, String> = emptyMap(),
     val createdAt: LocalDateTime = LocalDateTime.now()
 )
