@@ -5,7 +5,7 @@ import com.dt.ecommerce.domain.customer.Customer
 import java.time.LocalDateTime
 
 data class Cart(
-    var pk: PK = PK.NULL,
+    val pk: PK = PK.NULL,
     val customer: Customer,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,

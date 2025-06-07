@@ -1,4 +1,4 @@
-package com.dt.ecommerce.app.usecase
+package com.dt.ecommerce.app.order.usecase
 
 import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.common.Params

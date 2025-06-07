@@ -1,4 +1,4 @@
-package com.dt.ecommerce.app.endpoint.dto
+package com.dt.ecommerce.app.order.endpoint.dto
 
 data class OrderRequest(
     val productId: Long,

@@ -1,4 +1,4 @@
-package com.dt.ecommerce.app.endpoint.dto
+package com.dt.ecommerce.app.order.endpoint.dto
 
 import com.dt.ecommerce.domain.order.Order
 

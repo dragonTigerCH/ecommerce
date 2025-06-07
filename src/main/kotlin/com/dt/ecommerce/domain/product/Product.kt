@@ -1,6 +1,7 @@
 package com.dt.ecommerce.domain.product
 
 import com.dt.ecommerce.domain.common.PK
+import jakarta.websocket.Decoder
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -13,7 +14,6 @@ data class Product(
     val discountPrice: BigDecimal? = null,
     val stockQuantity: Int,
     val category: String,
-    val images: List<String> = emptyList(),
     val weight: Double? = null,
     val brand: String? = null,
     val isActive: Boolean = true,

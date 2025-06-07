@@ -1,4 +1,4 @@
-package com.dt.ecommerce.infra.order
+package com.dt.ecommerce.infra.common
 
 import com.dt.ecommerce.domain.common.Address
 import jakarta.persistence.Embeddable

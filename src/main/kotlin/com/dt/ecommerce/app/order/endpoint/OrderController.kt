@@ -1,8 +1,8 @@
-package com.dt.ecommerce.app.endpoint
+package com.dt.ecommerce.app.order.endpoint
 
-import com.dt.ecommerce.app.endpoint.dto.OrderRequest
-import com.dt.ecommerce.app.endpoint.dto.OrderResponse
-import com.dt.ecommerce.app.usecase.PlaceOrderUseCase
+import com.dt.ecommerce.app.order.endpoint.dto.OrderRequest
+import com.dt.ecommerce.app.order.endpoint.dto.OrderResponse
+import com.dt.ecommerce.app.order.usecase.PlaceOrderUseCase
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

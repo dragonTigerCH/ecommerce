@@ -8,7 +8,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 data class Order(
-    var pk: PK = PK.NULL,
+    val pk: PK = PK.NULL,
     val customer: PK,
 
     val items: List<OrderItem>,
@@ -17,7 +17,7 @@ data class Order(
     val totalAmount: Money,
     val shippingAddress: Address,
 
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime? = null,
     val notes: String? = null,
 ) {
@@ -36,20 +36,20 @@ data class Order(
             customer = customer,
             totalAmount = totalAmount,
             shippingAddress = shippingAddress,
+            createdAt = LocalDateTime.now()
         )
     }
 }
 
 
 data class OrderItem(
-    var pk: PK = PK.NULL,
+    val pk: PK = PK.NULL,
+    val product: PK,
+
     val order: Order,
-    val productId: Long,
-    val productSku: String,
-    val productName: String,
+
+    val name: String,
     val quantity: Int,
     val unitPrice: BigDecimal,
-    val discount: BigDecimal = BigDecimal.ZERO,
-    val subtotal: BigDecimal,
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime
 )

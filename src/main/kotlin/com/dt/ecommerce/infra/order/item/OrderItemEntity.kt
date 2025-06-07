@@ -6,50 +6,52 @@ import com.dt.ecommerce.infra.BaseEntity
 import com.dt.ecommerce.infra.order.OrderEntity
 import jakarta.persistence.*
 import java.math.BigDecimal
-import java.time.LocalDateTime
 
 @Entity
+@Table(name = "order_item")
 class OrderItemEntity(
+    order: OrderEntity,
+    product: Long,
+    name: String,
+    quantity: Int,
+    unitPrice: BigDecimal
+): BaseEntity() {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    var id: Long? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    val order: OrderEntity,
-    val productId: Long,
-    val productSku: String,
-    val productName: String,
-    val quantity: Int,
-    val unitPrice: BigDecimal,
-    val discount: BigDecimal = BigDecimal.ZERO,
-    val subtotal: BigDecimal,
-): BaseEntity() {
+    var order: OrderEntity = order
+    @Column(name = "product_id", nullable = false)
+    var product: Long = product
+    @Column(name = "name", nullable = false)
+    var name: String = name
+    @Column(name = "quantity", nullable = false)
+    var quantity: Int = quantity
+    @Column(name = "unit_price", nullable = false)
+    var unitPrice: BigDecimal = unitPrice
+
     fun toDomain(): OrderItem {
         return OrderItem(
             pk = PK.from(id),
             order = order.toDomain(),
-            productId = productId,
-            productSku = productSku,
-            productName = productName,
+            product = PK.from(product),
+            name = name,
             quantity = quantity,
             unitPrice = unitPrice,
-            discount = discount,
-            subtotal = subtotal,
+            createdAt = createdAt,
         )
     }
 
     companion object {
         fun fromDomain(orderItem: OrderItem): OrderItemEntity {
             return OrderItemEntity(
-                id = orderItem.pk.getOriginal(),
                 order = OrderEntity.fromDomain(orderItem.order),
-                productId = orderItem.productId,
-                productSku = orderItem.productSku,
-                productName = orderItem.productName,
+                product = orderItem.product.getKey(),
+                name = orderItem.name,
                 quantity = orderItem.quantity,
                 unitPrice = orderItem.unitPrice,
-                discount = orderItem.discount,
-                subtotal = orderItem.subtotal,
-            )
+            ).also { it.id = orderItem.pk.getOriginal() }
         }
     }
 }

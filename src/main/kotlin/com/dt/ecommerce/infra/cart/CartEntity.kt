@@ -16,6 +16,7 @@ class CartEntity(
     var id: Long? = null
     @Column(name = "customer_id")
     var customerId: Long = customerId
+        protected set
 }
 
 class CartItemEntity(
@@ -24,5 +25,7 @@ class CartItemEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     var productId: String? = null
+        protected set
     var quantity: Int? = null
+        protected set
 }

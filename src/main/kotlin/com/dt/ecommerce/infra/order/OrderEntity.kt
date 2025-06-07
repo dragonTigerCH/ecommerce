@@ -1,25 +1,26 @@
 package com.dt.ecommerce.infra.order
 
 import com.dt.ecommerce.domain.common.PK
-import com.dt.ecommerce.domain.customer.Customer
 import com.dt.ecommerce.domain.order.Order
 import com.dt.ecommerce.domain.order.Order.OrderStatus
+import com.dt.ecommerce.domain.order.OrderItem
 import com.dt.ecommerce.infra.BaseEntity
-import com.dt.ecommerce.infra.customer.CustomerEntity
+import com.dt.ecommerce.infra.common.AddressEntity
+import com.dt.ecommerce.infra.common.MoneyEntity
+import com.dt.ecommerce.infra.order.item.OrderItemEntity
 import jakarta.persistence.*
-import java.time.LocalDateTime
+import org.hibernate.annotations.Cascade
 
 @Entity
 @Table(name = "orders")
 class OrderEntity(
-
     customer: Long,
     shippingAddress: AddressEntity,
     totalAmount: MoneyEntity,
 
-    status: OrderStatus = OrderStatus.PENDING,
-    notes: String? = null,
-): BaseEntity() {
+    status: OrderStatus,
+    notes: String?
+) : BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,10 @@ class OrderEntity(
 
     @Enumerated(EnumType.STRING)
     var status: OrderStatus = status
+
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var items: MutableList<OrderItemEntity> = mutableListOf()
+        protected set
 
     @JoinColumn(name = "customer_id")
     var customerId: Long = customer
@@ -50,20 +55,25 @@ class OrderEntity(
         AttributeOverride(name = "amount", column = Column(name = "total_amount")),
         AttributeOverride(name = "currency", column = Column(name = "total_currency"))
     )
+    @Column(name = "total_amount", nullable = false)
     var totalAmount: MoneyEntity = totalAmount
+        protected set
 
+    @Column(name = "notes")
     var notes: String? = notes
+        protected set
 
 
     fun toDomain(): Order {
         return Order(
             pk = PK.from(id),
             customer = PK.from(customerId),
-            items = emptyList(), //TODO
+            items = items.map { it.toDomain() },
             status = status,
             shippingAddress = shippingAddress.toDomain(),
             totalAmount = totalAmount.toDomain(),
             notes = notes,
+            createdAt = createdAt
         )
     }
 
