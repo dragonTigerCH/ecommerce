@@ -4,7 +4,7 @@ import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.order.Order
 import com.dt.ecommerce.domain.order.Order.OrderStatus
 import com.dt.ecommerce.domain.order.OrderItem
-import com.dt.ecommerce.infra.BaseEntity
+import com.dt.ecommerce.infra.common.BaseEntity
 import com.dt.ecommerce.infra.common.AddressEntity
 import com.dt.ecommerce.infra.common.MoneyEntity
 import com.dt.ecommerce.infra.order.item.OrderItemEntity
@@ -28,6 +28,7 @@ class OrderEntity(
 
     @Enumerated(EnumType.STRING)
     var status: OrderStatus = status
+        protected set
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
     var items: MutableList<OrderItemEntity> = mutableListOf()

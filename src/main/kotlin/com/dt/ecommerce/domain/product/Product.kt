@@ -1,5 +1,6 @@
 package com.dt.ecommerce.domain.product
 
+import com.dt.ecommerce.domain.common.Audit
 import com.dt.ecommerce.domain.common.PK
 import jakarta.websocket.Decoder
 import java.math.BigDecimal
@@ -17,6 +18,5 @@ data class Product(
     val weight: Double? = null,
     val brand: String? = null,
     val isActive: Boolean = true,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-    val updatedAt: LocalDateTime? = null
+    val audit: Audit,
 )

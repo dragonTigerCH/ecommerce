@@ -1,6 +1,8 @@
 package com.dt.ecommerce.domain.order
 
 import com.dt.ecommerce.domain.common.Address
+import com.dt.ecommerce.domain.common.Audit
+import com.dt.ecommerce.domain.common.AuditInfo
 import com.dt.ecommerce.domain.common.Money
 import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.customer.Customer
@@ -17,8 +19,7 @@ data class Order(
     val totalAmount: Money,
     val shippingAddress: Address,
 
-    val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime? = null,
+    val audit: Audit,
     val notes: String? = null,
 ) {
     enum class OrderStatus {
@@ -36,7 +37,7 @@ data class Order(
             customer = customer,
             totalAmount = totalAmount,
             shippingAddress = shippingAddress,
-            createdAt = LocalDateTime.now()
+            audit = Audit.from(AuditInfo.from())
         )
     }
 }
@@ -51,5 +52,5 @@ data class OrderItem(
     val name: String,
     val quantity: Int,
     val unitPrice: BigDecimal,
-    val createdAt: LocalDateTime
+    val audit: Audit,
 )

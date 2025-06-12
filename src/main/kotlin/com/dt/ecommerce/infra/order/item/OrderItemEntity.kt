@@ -2,7 +2,7 @@ package com.dt.ecommerce.infra.order.item
 
 import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.order.OrderItem
-import com.dt.ecommerce.infra.BaseEntity
+import com.dt.ecommerce.infra.common.BaseEntity
 import com.dt.ecommerce.infra.order.OrderEntity
 import jakarta.persistence.*
 import java.math.BigDecimal
