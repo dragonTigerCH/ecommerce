@@ -1,5 +1,7 @@
 package com.dt.ecommerce.infra.order
 
+import com.dt.ecommerce.domain.common.Audit
+import com.dt.ecommerce.domain.common.AuditInfo
 import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.order.Order
 import com.dt.ecommerce.domain.order.Order.OrderStatus
@@ -74,7 +76,7 @@ class OrderEntity(
             shippingAddress = shippingAddress.toDomain(),
             totalAmount = totalAmount.toDomain(),
             notes = notes,
-            createdAt = createdAt
+            audit = Audit(AuditInfo.from(by = createdBy))
         )
     }
 

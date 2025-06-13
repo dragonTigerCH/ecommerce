@@ -8,15 +8,31 @@ import java.time.LocalDateTime
 
 data class Product(
     var pk: PK = PK.NULL,
-    val sku: String,
     val name: String,
-    val description: String,
+    val description: String? = null,
     val price: BigDecimal,
-    val discountPrice: BigDecimal? = null,
-    val stockQuantity: Int,
-    val category: String,
-    val weight: Double? = null,
-    val brand: String? = null,
+    val stock: Stock,
+    val categories: List<ProductCategory>,
     val isActive: Boolean = true,
     val audit: Audit,
+)
+
+data class ProductCategory(
+    val category: Category,
+    val product: Product,
+
+    val isMain: Boolean = false,
+    val audit: Audit,
+)
+
+
+data class Category(
+    val pk: PK = PK.NULL,
+    val name: String,
+    val audit: Audit,
+)
+
+data class Stock(
+    val product: Product,
+    val quantity: Int
 )

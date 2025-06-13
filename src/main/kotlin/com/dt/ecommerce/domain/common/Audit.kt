@@ -25,8 +25,8 @@ data class AuditInfo(
             by = PK.NULL,
             at = LocalDateTime.now()
         )
-        fun from(by: PK) = AuditInfo(
-            by = by,
+        fun from(by: Long?) = AuditInfo(
+            by = PK.from(by),
             at = LocalDateTime.now()
         )
     }

@@ -1,5 +1,7 @@
 package com.dt.ecommerce.infra.customer
 
+import com.dt.ecommerce.domain.common.Audit
+import com.dt.ecommerce.domain.common.AuditInfo
 import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.customer.Customer
 import jakarta.persistence.Column
@@ -7,8 +9,10 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 @Entity
+@Table(name = "customers")
 class CustomerEntity(
     email: String,
     name: String,
@@ -31,7 +35,8 @@ class CustomerEntity(
         return Customer(
             pk = PK.from(id),
             email = email,
-            name = name
+            name = name,
+            audit = Audit.from(AuditInfo.from())
         )
     }
 

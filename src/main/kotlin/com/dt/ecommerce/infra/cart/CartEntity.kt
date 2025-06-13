@@ -7,8 +7,10 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 @Entity
+@Table(name = "carts")
 class CartEntity(
     customer: Long,
 ): BaseEntity() {
@@ -20,6 +22,8 @@ class CartEntity(
         protected set
 }
 
+@Entity
+@Table(name = "cart_items")
 class CartItemEntity(
     product: Long,
     quantity: Int
