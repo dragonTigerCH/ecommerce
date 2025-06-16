@@ -2,14 +2,17 @@ server:
   port: 8085
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
+
   application:
     name: ecommerce-dt
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3308/ecommerce
-    username: root
-    password: spation1234!
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:

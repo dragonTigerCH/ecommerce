@@ -16,16 +16,16 @@ class OrderItemRepositoryTest(
 ) {
 
     @Test
-    fun `should find all order items by order id`(){
+    fun `should return empty order items`(){
 
-        //GIVEN
-
-        val orderId = 1L
-
-        //WHEN
-        val items = repository.findAllByOrderId(orderId)
+        //GIVEN && WHEN
+        val items = repository.findAllByOrderId(NON_EXISTENT_ORDER_ID)
 
         //THEN
-        assertThat(items.size).isEqualTo(0)
+        assertThat(items).isEmpty()
+    }
+
+    companion object {
+        private const val NON_EXISTENT_ORDER_ID = 0L
     }
 }

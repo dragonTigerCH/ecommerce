@@ -4,6 +4,7 @@ import com.dt.ecommerce.domain.common.Audit
 import com.dt.ecommerce.domain.common.AuditInfo
 import com.dt.ecommerce.domain.common.PK
 import com.dt.ecommerce.domain.customer.Customer
+import com.dt.ecommerce.infra.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -16,7 +17,7 @@ import jakarta.persistence.Table
 class CustomerEntity(
     email: String,
     name: String,
-) {
+): BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
