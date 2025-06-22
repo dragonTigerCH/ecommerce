@@ -18,7 +18,7 @@ class OrderController(
         @RequestBody request: OrderRequest
     ): OrderResponse {
         val param = PlaceOrderUseCase.Param(
-            request.productId
+
         )
 
         return placeOrderUseCase.execute(param)

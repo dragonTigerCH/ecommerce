@@ -8,6 +8,7 @@ data class Audit(
 ) {
     companion object {
         fun from(created: AuditInfo) = Audit(created)
+        fun updated(created: AuditInfo, updated: AuditInfo) = Audit(created = created, updated = updated)
     }
 }
 
